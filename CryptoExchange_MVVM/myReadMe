@@ -1,0 +1,100 @@
+
+Kullanılan teknoloji:
+    1.MVVM
+    2.APİ-JSON
+    3.EXTENSİON
+    4.CompletionBlock yapımı
+    5.@escaping kullanımı
+    
+
+Kullanıcı Arayüzü
+
+1.Adım  tableview kullanıyoruz ana ekranımızı kullanıyoruz.Bunu VC ye atıyoruz.
+2.Adım  tableView kodlarını yazıyoruz. VC içine
+3.Adım  cell oluşturuyoruz ve içerisine 2 tane label koyuyoruz bılgılerı göstermesi adına.Cell'in Idenfifler'ını verırız.
+4.Adım  Cell için bir tane Cocoa Touch Class ' ı oluştururuz. Bunu oluştururken  Sınıfını "UITableViewCell" seçmeyi unutmuyoruz.Sonra Cell'e gelip bunu entegre etmemız laızm
+5.Adım  Cell içerisinde oluşturmuş oldugumuz label ları bu olusturulan CryptoTableViewCell' içine atıyoruz.
+6.Adım  ViewControllerda  cellForRowAt de  cell degıskenımızı olustururuz.
+7.Adım  Tableview çalışıyormu diye kontrol ediyoruz.Çalışıyor  devam ...
+
+
+
+
+Modeli Yazmak
+
+
+
+
+
+8.Adım  Dosyaları olusturuyoruz "View(VC)","Model" ,"ViewModel" ve "Service" klasörlerini oluşturuyoruz.
+**
+9.Adım  Model klasörümüzün içine bir swift dosyası oluşturuyoruz.Adına "CrytoCurrency" diyoruz.İçine bir struct oluşturcaz.Bu struct'ın özellikleri neler olmali Apide bize          hangi değişkenleri sunuyorsa onlarla ilgili değişkenler oluştururum.Buradaki değişken isimleri json ile verilen isimlerle "AYNI OLMAK ZORUNDAAAA" daha önce kendimiz         manuel olarak tektek alıp kodlamıştık bunu swiftin bizim için yapmasını istiyorsak değişken isimleri aynı olmak zorunda
+        Bunu yapmanın yolu; Struct ımı "Decodable" olarak tanımlamamız. "Decodable" biz internetten veri çekerken düzğün bir formatta çekiyorsak otomatik olarak  verileralabılırız. Tek tek  almaya gerek kalmaz.
+        Birde "Encodable" var buda aynı şekilde dataları yollarken encod edebiliriz."Codable" ise  "decodable ve encodable" nin birşelmiş hhali buda şu için kullanılır.Eğer bir Model yapıyorsak ve bu modellerle Hem "GET" Hem  "POST" işlemleri yapıyorsak  "Codable" yaparız.
+        
+10.Adım  Biz " Decodable " kullanacağız.
+
+
+
+
+
+
+Service Yazma ( İnternetten Veri Çekme İşlemlerinin yapıldığı , kodların tutuldugu yer.)
+
+
+
+
+
+
+11.Adım  Burada ne yapacagız İnternetten verileri çekme işlemini yapacak kodların yazıldığı yer
+
+12.Adım  Service Klasörünün içine "WebService" adında bir  swift dosyası oluşturacağız.Ve içinde bir class oluşturacagız.Burada "Completion Block" öğreneceğiz ( Örnek                firebase'den bir veri ındırıyoruz o bize tamamlama blocku veriyor) kendisi swiftin otomatik getiriyordu şimdi burada onu nasıl tanımlandıgını görecegız.Sonunda               download ettigimizde  sonunda olusturdugumuz "func"ı nasıl döndürebiliriz bunu yapacagız.
+
+13.Adım "WebService" de gerekli kodları yazdıktan sonra  VC ye  gelip "ViewDidLoad()" methodunda url'i tanımlarız ve "WebService" class'ındaki tanımlamış oldugumuz                  "download..()" methodunu çağırırız.
+
+
+                                let url = URL(string: "https://raw.githubusercontent.com/atilsamancioglu/K21-JSONDataSet/master/crypto.json")!
+        
+                                  //Kendimiz olusturmustuk "Comletion Block" umuzu diyorki sana Array verecegım CryptoCurrency içeren
+                                    WebService().downloadCurrencies(url: url) { (cryptoS) in
+                                        
+                                        if let cryptoS = cryptoS {
+                                            
+                                        }
+                                    }
+
+
+
+14.Adım  Çalıştırırız. Terminalde veriler gelir.
+
+
+
+
+
+
+Verilerin İşlenmesi  ( ViewModel Klasörünün Amacı)
+
+NOT: Her bir view'ın kendi ViewModel swift dosyası olması gerekiyor.Ama biz burada 2 tane kullancaz.Yazılımcılar artık "ViewModel" ları sadeleştirmek istiyor olabildiğince
+
+15.Adım  " ViewModel " Klasörü içerisine  "  CryptoViewModel  "  siwft dosyası oluştururuz.
+
+16.Adım  ViewController'da bulunan tableViewde wb. yapılarad gösterilebilecek her türlü veriyi burada "ViewModel" da hazırlıyabiliriz.Sadece orada bunları çağırmak kalacak
+
+
+
+17.Adım  VC de kendi model' nesnemizi oluşturuyoruz.
+
+18.Adım  13.adımda  ViewDidLoad() methodunda tanımladıgımız kısımı orada tanımlamak cok mantıklı degıl o yuzden   yeni bir func tanımlarız orada olustururuz. " getData() " methodu.
+
+19.Adım  Bu getData() methodunu TableView methodlarında kullanacagız. cell'imizi tanımladık sonra "let cryptoViewModel" tanımlarız." label textlerine degerleri atarız.
+
+20.Adım  Şimdi  CryptoViewModel 'ımız çalışıyor ancak başka tutorial larda farklı kullanımlar mevcuttur.Bunlar nelerdir . Şu şekilde  yukarıda ne demiştik olabildiğince sadeleştirilmeye gidilmektedir demiştik. Buradada olusturulan  "struct veya class" ıcerısınde sadece degıskenler tutulup " functıonların extensıon"  ile dahil edilir.
+
+
+
+
+
+        
+
+
+
